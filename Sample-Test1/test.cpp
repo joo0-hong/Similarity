@@ -1,8 +1,13 @@
 #include "pch.h"
 #include "../Project11/Similarity.cpp"
 #include <iostream>
+#include <string>
 using namespace std;
 
 TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
+	StringSimilarityChecker checker;
+	string a = "ASD";
+	string b = "DSA";
+	
+	EXPECT_EQ(checker.run(a, b), 60);
 }
