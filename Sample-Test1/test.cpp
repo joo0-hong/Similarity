@@ -18,3 +18,10 @@ TEST(TestCaseName, DoubleLength) {
 	
 	EXPECT_EQ(checker.run(a, b), 0);
 }
+TEST(TestCaseName, Length5and3) {
+	StringSimilarityChecker checker;
+	string a = "AAABB";
+	string b = "BAA";
+	
+	EXPECT_EQ(checker.run(a, b), 20);
+}
