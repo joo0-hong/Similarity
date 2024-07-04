@@ -7,6 +7,8 @@ class StringSimilarityChecker {
 public:
 	const int MAX_LENGTH_SCORE = 60;
 	const int MAX_ALPHA_SCORE = 40;
+
+	// Length checker
 	int getLengthScore(string a, string b) {
 		int longlen = max(a.length(), b.length());
 		int shortlen = min(a.length(), b.length());
@@ -23,15 +25,17 @@ public:
 	{
 		return MAX_LENGTH_SCORE * (shortlen - (longlen - shortlen)) / shortlen;
 	}
+
+	// Alphabet checker
 	int getAlphaScore(string a, string b)
 	{
 		for (int alen = 0; alen < a.length(); alen++) {
-			addCharTotalList(a[alen]);
 			for (int blen = 0; blen < b.length(); blen++) {
-				addCharTotalList(b[blen]);
+				addCharToListWithCheck(totalList, a[alen]);
+				addCharToListWithCheck(totalList, b[blen]);
 				if (a[alen] == b[blen])
 				{
-					addCharToSameList(a[alen]);
+					addCharToListWithCheck(sameList, a[alen]);
 				}
 			}
 		}
@@ -39,30 +43,21 @@ public:
 		if (sameList.size() == 0)
 			return 0;
 
-		if (a.length() == sameList.size())
+		if (sameList.size() == a.length())
 			return MAX_ALPHA_SCORE;
 
+		return calcAlphaScore();
+	}
+
+	unsigned long long calcAlphaScore()
+	{
 		return MAX_ALPHA_SCORE * sameList.size() / totalList.size();
 	}
 
-	void addCharToSameList(char sameChar)
+	void addCharToListWithCheck(vector<char>& list, char input)
 	{
 		bool found = false;
-		for (char ch : sameList)
-		{
-			if (ch == sameChar) {
-				found = true;
-				break;
-			}
-		}
-		if (found == false)
-			sameList.push_back(sameChar);
-	}
-
-	void addCharTotalList(char input)
-	{
-		bool found = false;
-		for (char ch : totalList)
+		for (char ch : list)
 		{
 			if (ch == input) {
 				found = true;
@@ -70,9 +65,9 @@ public:
 			}
 		}
 		if (found == false)
-			totalList.push_back(input);
+			list.push_back(input);
 	}
-
+private : 
 	vector<char> totalList;
 	vector<char> sameList;
 };
