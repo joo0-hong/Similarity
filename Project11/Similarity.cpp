@@ -9,8 +9,12 @@ public:
 		int longlen = max(a.length(), b.length());
 		int shortlen = min(a.length(), b.length());
 
-		if (longlen == shortlen) { return MAX_SCORE; }
-		if (longlen >= shortlen * 2) { return 0; }
+		if (longlen == shortlen) {
+			return MAX_SCORE;
+		}
+		if (longlen >= shortlen * 2) {
+			return 0;
+		}
 		return GetScore(longlen, shortlen);
 	}
 	int GetScore(int longlen, int shortlen)
